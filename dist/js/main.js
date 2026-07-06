@@ -16,7 +16,7 @@
   \******************/
 (__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
 
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _modules_modal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/modal.js */ \"./modules/modal.js\");\n\r\n\r\ndocument.addEventListener(\"DOMContentLoaded\", () => {\r\n  (0,_modules_modal_js__WEBPACK_IMPORTED_MODULE_0__.initModal)();\r\n});\r\n\r\n\n\n//# sourceURL=webpack:///./index.js?\n}");
+eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _modules_modal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/modal.js */ \"./modules/modal.js\");\n/* harmony import */ var _modules_smoothScroll_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/smoothScroll.js */ \"./modules/smoothScroll.js\");\n\r\n\r\n\r\ndocument.addEventListener(\"DOMContentLoaded\", () => {\r\n  (0,_modules_modal_js__WEBPACK_IMPORTED_MODULE_0__.initModal)();\r\n  (0,_modules_smoothScroll_js__WEBPACK_IMPORTED_MODULE_1__.smoothScroll)();\r\n});\r\n\r\n\n\n//# sourceURL=webpack:///./index.js?\n}");
 
 /***/ },
 
@@ -27,6 +27,16 @@ eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _mo
 (__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
 
 eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   initModal: () => (/* binding */ initModal)\n/* harmony export */ });\nconst initModal = () => {\r\n  const modalTriggers = document.querySelectorAll(\".callback-btn\");\r\n  const modal = document.querySelector(\".modal-callback\");\r\n  const overlay = document.querySelector(\".modal-overlay\");\r\n  const modalClose = modal?.querySelector(\".modal-close\");\r\n\r\n  const openModal = (event) => {\r\n    event.preventDefault();\r\n\r\n    if (modal && overlay) {\r\n      modal.style.display = \"block\";\r\n      overlay.style.display = \"block\";\r\n      document.body.style.overflow = \"hidden\";\r\n    }\r\n  };\r\n\r\n  const closeModal = () => {\r\n    if (modal && overlay) {\r\n      modal.style.display = \"none\";\r\n      overlay.style.display = \"none\";\r\n      document.body.style.overflow = \"\";\r\n    }\r\n  };\r\n\r\n  modalTriggers.forEach((trigger) => {\r\n    trigger.addEventListener(\"click\", openModal);\r\n  });\r\n\r\n  if (modalClose) {\r\n    modalClose.addEventListener(\"click\", closeModal);\r\n  }\r\n\r\n  if (overlay) {\r\n    overlay.addEventListener(\"click\", closeModal);\r\n  }\r\n\r\n  document.addEventListener(\"keydown\", (event) => {\r\n    if (event.key === \"Escape\" && modal?.style.display === \"block\") {\r\n      closeModal();\r\n    }\r\n  });\r\n};\r\n\n\n//# sourceURL=webpack:///./modules/modal.js?\n}");
+
+/***/ },
+
+/***/ "./modules/smoothScroll.js"
+/*!*********************************!*\
+  !*** ./modules/smoothScroll.js ***!
+  \*********************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   smoothScroll: () => (/* binding */ smoothScroll)\n/* harmony export */ });\nconst smoothScroll = () => {\r\n  const anchorLinks = document.querySelectorAll('a[href^=\"#\"]');\r\n\r\n  const headerHeight = 101; \r\n\r\n  anchorLinks.forEach((link) => {\r\n    link.addEventListener(\"click\", function (event) {\r\n      event.preventDefault();\r\n\r\n      const href = this.getAttribute(\"href\");\r\n\r\n      if (!href || href === \"#\") return;\r\n\r\n      const targetId = href.substring(1);\r\n      const targetElement = document.getElementById(targetId);\r\n\r\n      if (!targetElement) return;\r\n\r\n\r\n      const elementPosition = targetElement.getBoundingClientRect().top;\r\n      const offsetPosition =\r\n        elementPosition + window.pageYOffset - headerHeight;\r\n\r\n      window.scrollTo({\r\n        top: offsetPosition,\r\n        behavior: \"smooth\",\r\n      });\r\n    });\r\n  });\r\n};\r\n\n\n//# sourceURL=webpack:///./modules/smoothScroll.js?\n}");
 
 /***/ }
 
