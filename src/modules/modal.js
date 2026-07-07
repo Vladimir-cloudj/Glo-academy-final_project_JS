@@ -1,6 +1,6 @@
 export const initModal = () => {
   const modalTriggers = document.querySelectorAll(
-    ".modal-trigger, .callback-btn",
+    ".modal-trigger, .callback-btn, .button-services",
   );
   const modal = document.querySelector(".modal-callback");
   const overlay = document.querySelector(".modal-overlay");
@@ -10,15 +10,34 @@ export const initModal = () => {
 
   const openModal = (e) => {
     if (e) e.preventDefault();
+
+    const scrollY = window.scrollY;
+    const scrollbarWidth =
+      window.innerWidth - document.documentElement.clientWidth;
+
+    document.body.style.overflow = "hidden";
+    document.body.style.paddingRight = `${scrollbarWidth}px`;
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+
     modal.style.display = "block";
     overlay.style.display = "block";
-    document.body.style.overflow = "hidden";
   };
 
   const closeModal = () => {
     modal.style.display = "none";
     overlay.style.display = "none";
+
+    const scrollY = document.body.style.top;
     document.body.style.overflow = "";
+    document.body.style.paddingRight = "";
+    document.body.style.position = "";
+    document.body.style.top = "";
+    document.body.style.left = "";
+    document.body.style.right = "";
+    window.scrollTo(0, parseInt(scrollY || "0") * -1);
   };
 
   modalTriggers.forEach((trigger) => {
