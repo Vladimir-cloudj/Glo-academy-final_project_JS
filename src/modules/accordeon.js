@@ -11,7 +11,6 @@ export const accordeon = () => {
     title.addEventListener("click", () => {
       const isActive = element.classList.contains("active");
 
-      // Закрываем все вкладки
       elements.forEach((el) => {
         el.classList.remove("active");
         const content = el.querySelector(".element-content");
@@ -20,7 +19,6 @@ export const accordeon = () => {
         }
       });
 
-      // Если кликнутая вкладка не была активна — открываем её
       if (!isActive) {
         element.classList.add("active");
         const content = element.querySelector(".element-content");
