@@ -4,6 +4,7 @@ import { smoothScroll } from "./modules/smoothScroll.js";
 import {servicesSwiper} from "./modules/services-swiper.js";
 import { accordeon } from "./modules/accordeon.js";
 import { scrollTop } from "./modules/scrollTop.js";
+import { formCallback } from "./modules/formCallback.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   initModal();
@@ -12,5 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
   servicesSwiper();
   accordeon();
   scrollTop();
+  formCallback();
 });
 
