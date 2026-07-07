@@ -853,7 +853,7 @@ hr.white {
 	height: 450px;
 }
 .top-slider .item {
-	overflow: hidden;
+	/* overflow: hidden; */
 	height: 450px;
 	position: relative;
 }
@@ -1233,3 +1233,91 @@ video#video_background {
 	}
 }
 /**** /. services section *****/
+
+
+
+.services-elements.swiper {
+  overflow: hidden;
+  padding: 0 40px; 
+}
+
+.services-elements .swiper-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+}
+
+.services-elements .swiper-slide {
+  float: none !important;
+  width: auto !important;
+  flex-shrink: 0;
+  height: auto !important;
+  box-sizing: border-box;
+}
+
+.services-elements .swiper-slide .element {
+  margin-bottom: 0;
+  height: 100%;
+}
+
+.services-elements .swiper-slide .element .element-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.services-arrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.services-arrow .arrow-left,
+.services-arrow .arrow-right {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: opacity 0.2s;
+}
+
+.services-arrow .arrow-left:hover,
+.services-arrow .arrow-right:hover {
+  opacity: 0.7;
+}
+
+.services-elements .swiper-button-prev,
+.services-elements .swiper-button-next {
+  color: #e9bb26;
+  width: 30px;
+  height: 30px;
+}
+
+.services-elements .swiper-button-prev::after,
+.services-elements .swiper-button-next::after {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.services-elements {
+  overflow: hidden; 
+}
+
+.services-elements .row.services-carousel {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.services-elements .row.services-carousel > .col-md-4,
+.services-elements .row.services-carousel > .col-sm-6,
+.services-elements .row.services-carousel > .col-xs-12 {
+  float: none !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+  max-width: none !important;
+}

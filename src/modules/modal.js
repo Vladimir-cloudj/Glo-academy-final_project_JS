@@ -1,41 +1,48 @@
 export const initModal = () => {
-  const modalTriggers = document.querySelectorAll(".callback-btn");
+  const modalTriggers = document.querySelectorAll(
+    ".modal-trigger, .callback-btn",
+  );
   const modal = document.querySelector(".modal-callback");
   const overlay = document.querySelector(".modal-overlay");
   const modalClose = modal?.querySelector(".modal-close");
 
-  const openModal = (event) => {
-    event.preventDefault();
+  if (!modal || !overlay) return;
 
-    if (modal && overlay) {
-      modal.style.display = "block";
-      overlay.style.display = "block";
-      document.body.style.overflow = "hidden";
-    }
+  const openModal = (e) => {
+    if (e) e.preventDefault();
+    modal.style.display = "block";
+    overlay.style.display = "block";
+    document.body.style.overflow = "hidden";
   };
 
   const closeModal = () => {
-    if (modal && overlay) {
-      modal.style.display = "none";
-      overlay.style.display = "none";
-      document.body.style.overflow = "";
-    }
+    modal.style.display = "none";
+    overlay.style.display = "none";
+    document.body.style.overflow = "";
   };
 
   modalTriggers.forEach((trigger) => {
     trigger.addEventListener("click", openModal);
   });
 
+  const serviceLinks = document.querySelectorAll(
+    ".services-elements .fancyboxModal",
+  );
+  serviceLinks.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      openModal();
+    });
+  });
+
   if (modalClose) {
     modalClose.addEventListener("click", closeModal);
   }
 
-  if (overlay) {
-    overlay.addEventListener("click", closeModal);
-  }
+  overlay.addEventListener("click", closeModal);
 
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && modal?.style.display === "block") {
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal.style.display === "block") {
       closeModal();
     }
   });
