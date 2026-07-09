@@ -1,113 +1,70 @@
-/**
- * Модуль слайдера для блока .top-slider
- * Реализует автопрокрутку слайдов каждые 3 секунды
- * с точками переключения (dots)
- */
-
 export const topSlider = () => {
+   const SLIDE_INTERVAL_MS = 3000;
   const slider = document.querySelector(".top-slider");
-
-  if (!slider) {
-    console.warn("Блок .top-slider не найден");
-    return;
-  }
+  if (!slider) return;
 
   const slides = slider.querySelectorAll(".item");
-
-  if (slides.length === 0) {
-    console.warn("Слайды не найдены");
-    return;
-  }
+  if (slides.length === 0) return;
 
   let currentSlide = 0;
-  let autoPlayInterval = null;
-  const autoPlayDelay = 3000; // 3 секунды
+  const totalSlides = slides.length;
+  let autoPlayInterval;
 
-  // Создаём контейнер для дотсов
-  const dotsContainer = document.createElement("ul");
-  dotsContainer.className = "slick-dots";
-  slider.appendChild(dotsContainer);
+  let dotsContainer = slider.querySelector(".slider-dots");
+  if (!dotsContainer) {
+    dotsContainer = document.createElement("ul");
+    dotsContainer.className = "slider-dots";
+    slider.appendChild(dotsContainer);
 
-  // Создаём дотсы для каждого слайда
-  slides.forEach((_, index) => {
-    const dot = document.createElement("li");
-    dot.dataset.slide = index;
+    slides.forEach((_, index) => {
+      const dot = document.createElement("li");
+      if (index === 0) dot.classList.add("slick-active");
 
-    const button = document.createElement("button");
-    button.type = "button";
-    dot.appendChild(button);
+      dot.addEventListener("click", () => {
+        stopAutoPlay();
+        showSlide(index);
+        startAutoPlay();
+      });
 
-    dotsContainer.appendChild(dot);
-  });
+      dotsContainer.appendChild(dot);
+    });
+  }
 
   const dots = dotsContainer.querySelectorAll("li");
 
-  // Функция показа слайда
   const showSlide = (index) => {
-    // Скрываем все слайды
-    slides.forEach((slide) => {
-      slide.classList.remove("active");
-      slide.style.display = "none";
+    slides.forEach((slide, i) => {
+      const isActive = i === index;
+
+      slide.classList.toggle("active", isActive);
+      const table = slide.querySelector(".table");
+      if (table) {
+        table.classList.toggle("active", isActive);
+      }
     });
 
-    // Убираем активный класс у всех дотсов
-    dots.forEach((dot) => {
-      dot.classList.remove("slick-active");
+    dots.forEach((dot, i) => {
+      dot.classList.toggle("slick-active", i === index);
     });
-
-    // Показываем нужный слайд
-    slides[index].style.display = "block";
-
-    // Небольшая задержка для анимации
-    setTimeout(() => {
-      slides[index].classList.add("active");
-    }, 10);
-
-    // Активируем нужный дотс
-    dots[index].classList.add("slick-active");
 
     currentSlide = index;
   };
 
-  // Функция перехода к следующему слайду
   const nextSlide = () => {
-    let nextIndex = currentSlide + 1;
-    if (nextIndex >= slides.length) {
-      nextIndex = 0;
-    }
-    showSlide(nextIndex);
+    showSlide((currentSlide + 1) % totalSlides);
   };
 
-  // Функция запуска автопрокрутки
   const startAutoPlay = () => {
-    autoPlayInterval = setInterval(nextSlide, autoPlayDelay);
+    autoPlayInterval = setInterval(nextSlide, SLIDE_INTERVAL_MS);
   };
 
-  // Функция остановки автопрокрутки
   const stopAutoPlay = () => {
-    if (autoPlayInterval) {
-      clearInterval(autoPlayInterval);
-      autoPlayInterval = null;
-    }
+    clearInterval(autoPlayInterval);
   };
 
-  // Обработчики клика на дотсы
-  dots.forEach((dot, index) => {
-    dot.addEventListener("click", (e) => {
-      e.preventDefault();
-      stopAutoPlay();
-      showSlide(index);
-      startAutoPlay(); // Перезапускаем автопрокрутку
-    });
-  });
-
-  // Показываем первый слайд при загрузке
-  showSlide(0);
-
-  // Запускаем автопрокрутку
-  startAutoPlay();
-
-  // Останавливаем автопрокрутку при наведении на слайдер
   slider.addEventListener("mouseenter", stopAutoPlay);
   slider.addEventListener("mouseleave", startAutoPlay);
+
+  showSlide(0);
+  startAutoPlay();
 };
